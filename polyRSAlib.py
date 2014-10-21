@@ -40,7 +40,7 @@ def int_to_string(int_message):
 # encrypt plaintext message m
 def encrypt(n, e, m):
     max_length = ((len(str(n))-1) // 2) + 1
-    if len(m) > max_length:
+    if len(m) > max_length:  # make sure message isn't too long for keys
         return None
     m_int = string_to_int(m)
     c = pow(m_int,e,n)
@@ -62,14 +62,13 @@ def generate_keys(p, q):
     private_key = (n, d)
     return (public_key, private_key)
 
-# validates that keys haven't been used before (enhanced-security feature)
+# validates that keys haven't been used before (enhanced-security super-premium feature)
 def is_n_unique(public_key):
     for key in open("/tmp/polyRSA_public.keys", "r").readlines():
         if public_key == key.strip():
+            # key not unique!
             return False
-    # unique key, update
+    # unique key, update file
     with open("/tmp/polyRSA_public.keys", "a") as public_keys_file:
         public_keys_file.write("%s\n" % public_key)
     return True
-
-
